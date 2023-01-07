@@ -28,7 +28,7 @@ class ReflexAgent(Agent):
     it in any way you see fit, so long as you don't touch our method
     headers.
     """
-
+    print("inside reflex agent")
 
     def getAction(self, gameState: GameState):
         """
@@ -44,13 +44,23 @@ class ReflexAgent(Agent):
 
         # Choose one of the best actions
         scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
+        
+        #print("Printing Scores")
+        #print(legalMoves)
+        #print(scores)
+
         bestScore = max(scores)
         bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
+
+        #print("Printing best indices")
+        #print(bestIndices)
+
         chosenIndex = random.choice(bestIndices) # Pick randomly among the best
 
         "Add more of your code here if you want to"
 
         return legalMoves[chosenIndex]
+        #return legalMoves[0]
 
     def evaluationFunction(self, currentGameState: GameState, action):
         """
@@ -75,8 +85,62 @@ class ReflexAgent(Agent):
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        "Q1"
 
+        # Get pacman's current position
+        currentPosition = currentGameState.getPacmanPosition()
+
+        # Initialise score to zero
+        score = 0
+
+        # If next action leads to winning
+        # Then high score
+        if successorGameState.isWin():
+            return 99999
+
+        # If next action causes ghost and pacman to intersect
+        # Then low score
+        for state in newGhostStates:
+            if state.getPosition() == currentPosition and state.scaredTimer == 0:
+                return -99999
+
+        # Stopping is bad because we could always be moving towards food
+        if action == 'Stop':
+            score -= 100
+
+        ### Food ###
+        AllFoodDistance = [util.manhattanDistance(newPos, food) for food in newFood]
+        nearestFood = min(AllFoodDistance)
+        # Nearest Food should have highest score
+        score += int(1/nearestFood)
+        # Minimise leftover food
+        score -= newFood.count()
+        
+        ### Ghosts ###
+
+        # current ghost states
+        AllCurrentGhostDistances = [util.manhattanDistance(newPos, ghost.getPosition()) 
+        for ghost in currentGameState.getGhostStates()]
+        nearestCurrentGhost = min(AllCurrentGhostDistances)
+
+        # new ghost states
+        AllNewGhostDistances = [util.manhattanDistance(newPos, ghost.getPosition()) \
+        for ghost in newGhostStates]
+        nearestNewGhost = min(AllNewGhostDistances)
+
+        # If action leads to ghosts getting closer
+        # Then bad score 
+        # If action leads to ghost going far
+        # Then high score
+        if nearestNewGhost < nearestCurrentGhost:
+            score -= 100
+        else:
+            score += 200
+
+        return successorGameState.getScore() + score
+
+### END OF REFLEX AGENT ###
+'''
 def scoreEvaluationFunction(currentGameState: GameState):
     """
     This default evaluation function just returns the score of the state.
@@ -177,3 +241,4 @@ def betterEvaluationFunction(currentGameState: GameState):
 
 # Abbreviation
 better = betterEvaluationFunction
+'''
