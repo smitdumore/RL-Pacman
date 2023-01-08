@@ -8,7 +8,21 @@ Build an evaluation function that scores actions
 
 Testing the code
 ```
-python pacman.py -p ReflexAgent -l testClassic
-python pacman.py --frameTime 0 -p ReflexAgent -k 1
-python pacman.py --frameTime 0 -p ReflexAgent -k 2
+python3 pacman.py -p ReflexAgent -l testClassic
+python3 pacman.py --frameTime 0 -p ReflexAgent -k 1
+python3 pacman.py --frameTime 0 -p ReflexAgent -k 2
 ```
+
+### Q2. Minimax Agent
+
+Testing the code
+```
+python3 autograder.py -q q2
+python3 pacman.py -p MinimaxAgent -l minimaxClassic -a depth=4
+python3 pacman.py -p MinimaxAgent -l trappedClassic -a depth=3
+``` 
+
+### TODO : 
+
+Q3. Alpha-Beta Pruning
+Q4. Expectimax
