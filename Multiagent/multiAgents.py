@@ -28,7 +28,6 @@ class ReflexAgent(Agent):
     it in any way you see fit, so long as you don't touch our method
     headers.
     """
-    print("inside reflex agent")
 
     def getAction(self, gameState: GameState):
         """
@@ -140,7 +139,7 @@ class ReflexAgent(Agent):
         return successorGameState.getScore() + score
 
 ### END OF REFLEX AGENT ###
-'''
+
 def scoreEvaluationFunction(currentGameState: GameState):
     """
     This default evaluation function just returns the score of the state.
@@ -200,7 +199,69 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        "Q2"
+
+        # Pacman's turn
+        # Try to maximise score
+        def maxValue(state, agentIndex, depth):
+            # 0 idx is the pacman
+            agentIndex = 0
+            legalActions = state.getLegalActions(agentIndex)
+
+            # Base case for recurison termination
+            # If empty legal actions or depth reached then call evaluation function
+            if not legalActions  or depth == self.depth:
+                return self.evaluationFunction(state)
+
+            # Get max
+            # Recursive call to next depth and next ghost
+            maximumValue =  max(minValue(state.generateSuccessor(agentIndex, action),
+            agentIndex + 1, depth + 1) for action in legalActions)
+
+            return maximumValue
+
+        # Ghost's turn
+        # Try to minimise Pacman's score
+        def minValue(state, agentIndex, depth):
+            # Get number of ghosts + Pacman
+            agentCount = gameState.getNumAgents()
+            # get legal actions for ghosts if agentIndex != 0
+            legalActions = state.getLegalActions(agentIndex)
+
+            # Recursion base case
+            if not legalActions:
+                return self.evaluationFunction(state)
+
+            # pacman is the last to move after all ghost movement
+            # Recurive calls
+            if agentIndex == agentCount - 1:
+                # Pacman's turn
+                minimumValue =  min(maxValue(state.generateSuccessor(agentIndex, action), \
+                agentIndex,  depth) for action in legalActions)
+            else:
+                # All ghost's turn
+                minimumValue = min(minValue(state.generateSuccessor(agentIndex, action), \
+                agentIndex + 1, depth) for action in legalActions)
+
+            return minimumValue
+
+        # Driver code for Minimax
+        # Pacman's turn first
+        # Get legal actions for Pacman(0) 
+        actions = gameState.getLegalActions(0)
+
+        allActions = {}
+
+        # Run Minimax from each action in actions
+        # And store the outcome in allActions
+        for action in actions:
+            # Pacman played 'action' from actions
+            # Now Ghost plays minValue with (newState, ghost index, depth=1)
+            allActions[action] = minValue(gameState.generateSuccessor(0, action), 1, 1)
+        
+        # return best outcome action set
+        return max(allActions, key=allActions.get)
+
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
@@ -241,4 +302,3 @@ def betterEvaluationFunction(currentGameState: GameState):
 
 # Abbreviation
 better = betterEvaluationFunction
-'''
