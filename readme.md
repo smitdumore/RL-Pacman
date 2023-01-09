@@ -22,7 +22,28 @@ python3 pacman.py -p MinimaxAgent -l minimaxClassic -a depth=4
 python3 pacman.py -p MinimaxAgent -l trappedClassic -a depth=3
 ``` 
 
-### TODO : 
+### Q3. Alpha-Beta Pruning
 
-Q3. Alpha-Beta Pruning
-Q4. Expectimax
+Testing the code
+```
+python pacman.py -p AlphaBetaAgent -a depth=3 -l smallClassic
+python autograder.py -q q3
+``` 
+
+### Q4. Expectimax
+
+Testing the code
+```
+python3 autograder.py -q q4
+python3 pacman.py -p ExpectimaxAgent -l minimaxClassic -a depth=3
+python3 pacman.py -p ExpectimaxAgent -l trappedClassic -a depth=3 -q -n 10
+```
+
+## Project 3 
+
+### Files to edit :
+1. valueIterationAgents.py
+2. qlearningAgents.py
+3. analysis.py
+
+### Q1. Value Iteration

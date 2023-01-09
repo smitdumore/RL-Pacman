@@ -233,7 +233,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 return self.evaluationFunction(state)
 
             # pacman is the last to move after all ghost movement
-            # Recurive calls
+            # Recursive calls
             if agentIndex == agentCount - 1:
                 # Pacman's turn
                 minimumValue =  min(maxValue(state.generateSuccessor(agentIndex, action), \
@@ -273,7 +273,86 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        "Q3"
+
+        def maxValue(state, agentIndex, depth, alpha, beta):
+            
+            agentIndex = 0
+            legalActions = state.getLegalActions(agentIndex)
+            
+            if not legalActions  or depth == self.depth:
+                return self.evaluationFunction(state)
+
+            max_answer = -99999
+            currAlpha = alpha
+
+            for action in legalActions:
+                max_answer = max( max_answer, minValue(state.generateSuccessor(agentIndex, action), 
+                agentIndex + 1, depth + 1, currAlpha, beta) )
+                
+                if max_answer > beta:
+                    return max_answer
+                
+                currAlpha = max(currAlpha, max_answer)
+            
+            return max_answer
+
+        def minValue(state, agentIndex, depth, alpha, beta):
+            
+            agentCount = gameState.getNumAgents()
+            legalActions = state.getLegalActions(agentIndex)
+            
+            if not legalActions:
+                return self.evaluationFunction(state)
+
+            min_answer = 99999
+            currBeta = beta
+
+            # pacman is the last to move after all ghost movement
+            # Recursive calls
+            if agentIndex == agentCount - 1:
+                # Pacman's turn
+                for action in legalActions:
+                    min_answer = min( min_answer, maxValue(state.generateSuccessor(agentIndex, action), 
+                    agentIndex, depth, alpha, currBeta) )
+                
+                    if min_answer < alpha:
+                        return min_answer
+                
+                currBeta = min(currBeta, min_answer)
+                
+            else:
+                # All ghost's turn
+                for action in legalActions:
+                    min_answer =  min(min_answer, minValue(state.generateSuccessor(agentIndex, action), 
+                    agentIndex + 1, depth, alpha, currBeta))
+                    if min_answer < alpha:
+                        return min_answer
+                    currBeta = min(currBeta, min_answer)
+
+            return min_answer
+
+        # Driver code 
+        actions = gameState.getLegalActions(0)
+
+        alpha = -99999
+        beta = 99999
+
+        allActions = {}
+
+        for action in actions:
+            # Pacman played 'action' from actions
+            # Now Ghost plays minValue with (newState, ghost index, depth=1)
+            value = minValue(gameState.generateSuccessor(0, action), 1, 1, alpha, beta)
+            allActions[action] = value
+
+            #update alpha
+            if value > beta:
+                return action
+            alpha = max(value, alpha)
+
+        # return best outcome action set
+        return max(allActions, key=allActions.get)
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
@@ -288,7 +367,63 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        "Q4"
+
+        # Ghost's turn (chance node)
+        def expValue(state, agentIndex, depth):
+            # Information about the agent count and the legal actions for the index
+            agentCount = gameState.getNumAgents()
+            legalActions = state.getLegalActions(agentIndex)
+
+            # Recursion base case
+            if not legalActions:
+                return self.evaluationFunction(state)
+
+        
+            expectedValue = 0
+            # Equal probability for each action
+            probability = 1.0 / len(legalActions) 
+
+            # pacman is the last to move after all ghost movement
+            for action in legalActions:
+                if agentIndex == agentCount - 1:
+                    # Pacman's turn
+                    currentExpValue =  maxValue(state.generateSuccessor(agentIndex, action), 
+                    agentIndex,  depth)
+                else:
+                    # Ghost's turn
+                    currentExpValue = expValue(state.generateSuccessor(agentIndex, action), 
+                    agentIndex + 1, depth)
+
+                expectedValue += currentExpValue * probability
+
+            return expectedValue
+
+        def maxValue(state, agentIndex, depth):
+            
+            agentIndex = 0
+            legalActions = state.getLegalActions(agentIndex)
+
+            # Recursion base case
+            if not legalActions  or depth == self.depth:
+                return self.evaluationFunction(state)
+
+            maximumValue =  max(expValue(state.generateSuccessor(agentIndex, action), 
+            agentIndex + 1, depth + 1) for action in legalActions)
+
+            return maximumValue
+
+        # Driver code
+        actions = gameState.getLegalActions(0)
+        
+
+        allActions = {}
+        for action in actions:
+
+            allActions[action] = expValue(gameState.generateSuccessor(0, action), 1, 1)
+
+        return max(allActions, key=allActions.get)
+        
 
 def betterEvaluationFunction(currentGameState: GameState):
     """
