@@ -47,3 +47,10 @@ python3 pacman.py -p ExpectimaxAgent -l trappedClassic -a depth=3 -q -n 10
 3. analysis.py
 
 ### Q1. Value Iteration
+
+Testing the code
+```
+python3 gridworld.py -a value -i 100 -k 10
+python3 gridworld.py -a value -i 5
+
+```
