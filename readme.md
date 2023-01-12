@@ -79,3 +79,10 @@ python3 autograder.py -q q4
 python3 crawler.py
 ```
 
+### Q5. Q-Learning and Pacman
+
+Testing the code
+```
+python3 pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid
+python3 autograder.py -q q5
+```
