@@ -86,3 +86,13 @@ Testing the code
 python3 pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid
 python3 autograder.py -q q5
 ```
+
+### Q6. Approximate Q-Learning
+
+Testing the code
+```
+python3 pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid
+python3 pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumGrid
+python3 pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumClassic
+python3 autograder.py -q q6
+```
