@@ -52,5 +52,19 @@ Testing the code
 ```
 python3 gridworld.py -a value -i 100 -k 10
 python3 gridworld.py -a value -i 5
+```
 
+### Q2. Policies
+
+Testing the code
+```
+python3 autograder.py -q q2
+```
+
+### Q3. Q-learning
+
+Testing the code
+```
+python3 gridworld.py -a q -k 5 -m
+python3 autograder.py -q q3
 ```
