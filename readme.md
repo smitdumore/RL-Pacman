@@ -68,3 +68,14 @@ Testing the code
 python3 gridworld.py -a q -k 5 -m
 python3 autograder.py -q q3
 ```
+
+### Q4. Epsilon Greedy
+
+Testing the code
+```
+python3 gridworld.py -a q -k 100 --noise 0.0 -e 0.1
+python3 gridworld.py -a q -k 100 --noise 0.0 -e 0.9
+python3 autograder.py -q q4
+python3 crawler.py
+```
+

@@ -128,6 +128,8 @@ class QLearningAgent(ReinforcementAgent):
         # This code does the exploration
         # We pick between the policy prescribed actions and random actions
 
+        # util.flipCoin -> return true with a probability epsilon
+        # and false with a probability 1 - epsilon
         if util.flipCoin(self.epsilon):
             return random.choice(legalActions)
         else:
