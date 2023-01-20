@@ -96,3 +96,17 @@ python3 pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 
 python3 pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumClassic
 python3 autograder.py -q q6
 ```
+
+## Project 4 
+
+### Files to edit : 
+1. bustersAgents.py 
+2. inference.py
+3. factorOperations.py
+
+### Q1. Bayes Net Structure
+
+Testing the code
+```
+python autograder.py -q q1
+```
