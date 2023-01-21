@@ -108,5 +108,12 @@ python3 autograder.py -q q6
 
 Testing the code
 ```
-python autograder.py -q q1
+python3 autograder.py -q q1
+```
+
+### Q2. Join Factors
+
+Testing the code
+```
+python3 autograder.py -q q2
 ```

@@ -102,7 +102,40 @@ def joinFactors(factors: List[Factor]):
 
 
     "*** YOUR CODE HERE ***"
-    raiseNotDefined()
+    # Factor: This stores a table of probabilities, although the sum of the entries in the table is not necessarily 1
+    # Refer project 4 prompt for "factor" definition  
+    
+    # This function basically does product rule
+    # A factor is just a probability table
+    unconditioned_vars = []
+    conditioned_vars = []
+    domain = {}
+
+    if len(factors)>0:
+        domain = (list(factors))[0].variableDomainsDict()
+
+    for factor in factors:
+        unconditioned_vars.extend(factor.unconditionedVariables())
+        conditioned_vars.extend(factor.conditionedVariables())
+
+    unconditioned_vars = list(set(unconditioned_vars))
+    conditioned_vars = [x for x in conditioned_vars if x not in unconditioned_vars]
+    conditioned_vars = list(set(conditioned_vars))
+
+    # ans is a new factor with new joined probabilites
+
+    # This is just an initialisation for ans
+    ans = Factor(unconditioned_vars,conditioned_vars,domain)
+    
+    assignments = ans.getAllPossibleAssignmentDicts()
+
+    for assignment in assignments:
+        prob = 1
+        for factor in factors:
+            prob *= factor.getProbability(assignment)
+        ans.setProbability(assignment, prob)
+
+    return ans
     "*** END YOUR CODE HERE ***"
 
 ########### ########### ###########
