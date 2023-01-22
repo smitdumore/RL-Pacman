@@ -186,7 +186,31 @@ def eliminateWithCallTracking(callTrackingList=None):
                     "unconditionedVariables: " + str(factor.unconditionedVariables()))
 
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        
+        # This function performs marginalisation to eliminate variable
+        # factor is an input parameter, which is just a probability table
+        # whose entries might or might not sum up to 1
+
+        unconditioned_vars = factor.unconditionedVariables()
+        conditioned_vars = factor.conditionedVariables()
+
+        unconditioned_vars = [x for x in unconditioned_vars if x != eliminationVariable]
+
+        # Initialising new factor
+        ans = Factor(unconditioned_vars,conditioned_vars,factor.variableDomainsDict())
+
+        # Dictionary of probabilites of conditioned and unconditioned variables
+        assignments = ans.getAllPossibleAssignmentDicts()
+        
+        for assignment in assignments:
+            prob=0
+            for x in factor.variableDomainsDict()[eliminationVariable]:
+                now = assignment.copy()
+                now [eliminationVariable] = x
+                prob += factor.getProbability(now)
+            ans.setProbability(assignment, prob)
+
+        return ans
         "*** END YOUR CODE HERE ***"
 
     return eliminate
