@@ -59,7 +59,7 @@ def constructBayesNet(gameState: hunters.GameState):
     variables = []
     edges = []
     variableDomainsDict = {}
-
+ 
     "*** YOUR CODE HERE ***"
     # Extend just means append
     # Creating nodes
@@ -206,9 +206,27 @@ def inferenceByVariableEliminationWithCallTracking(callTrackingList=None):
             eliminationOrder = sorted(list(eliminationVariables))
 
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
-        "*** END YOUR CODE HERE ***"
+        # Get all the factors with the evidence variable in it.
+        # Evidence variables are also called conditioned variables
+        currentFactorsList = bayesNet.getAllCPTsWithEvidence(evidenceDict)
 
+        # Follow the elimination order
+        for x in eliminationOrder:
+
+            # Join elimination variable and all evidence factors 
+            currentFactorsList , new_factor = joinFactorsByVariable(currentFactorsList,x)
+            
+            # Keep eliminating until unconditioned Variables == 1 
+            if len(new_factor.unconditionedVariables())>1:  
+                new_factor = eliminate(new_factor,x)
+                currentFactorsList.append(new_factor)
+
+        # Join factors is just like a produxt rule
+        # Refer notebook notes Variable Elimination
+        ans = joinFactors(currentFactorsList)
+        return normalize(ans)
+        
+        "*** END YOUR CODE HERE ***"
 
     return inferenceByVariableElimination
 

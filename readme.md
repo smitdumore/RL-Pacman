@@ -118,7 +118,6 @@ Testing the code
 python3 autograder.py -q q2
 ```
 
-
 ### Q3. Eliminate
 
 Testing the code
@@ -126,3 +125,9 @@ Testing the code
 python3 autograder.py -q q3
 ```
 
+### Q4. Variable Elimination
+
+Testing the code
+```
+python3 autograder.py -q q4
+```
