@@ -167,4 +167,11 @@ Testing the code
 python3 autograder.py -q q8
 ```
 
+### Q9. Approximate Inference Initialization and Beliefs
+
+Testing the code
+```
+python3 autograder.py -q q9
+```
+
 
