@@ -174,4 +174,10 @@ Testing the code
 python3 autograder.py -q q9
 ```
 
+### Q10. Approximate Inference Observation
+
+Testing the code
+```
+python3 autograder.py -q q10
+```
 
