@@ -146,6 +146,10 @@ Testing the code
 python3 autograder.py -q q5
 ```
 
+### Q6. Exact Inference Observation
 
-
+Testing the code
+```
+python3 autograder.py -q q6
+```
 
