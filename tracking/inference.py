@@ -743,7 +743,7 @@ class ParticleFilter(InferenceModule):
             belief[ghostpos] *= self.getObservationProb(observation,pacpos, ghostpos, jailpos)
 
         belief.normalize()
-        
+
         if belief.total() == 0:
             self.initializeUniformly(gameState)
         else:
@@ -761,7 +761,14 @@ class ParticleFilter(InferenceModule):
         gameState.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        newParticles = []
+        
+        for particle in self.particles:
+            newPosDist = self.getPositionDistribution(gameState, particle)
+            newParticles.append(newPosDist.sample())
+        
+        self.particles=newParticles
+
         "*** END YOUR CODE HERE ***"
 
 

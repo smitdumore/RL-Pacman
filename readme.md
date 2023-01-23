@@ -181,3 +181,13 @@ Testing the code
 python3 autograder.py -q q10
 ```
 
+### Q11. Approximate Inference with Time Elapse
+
+Testing the code
+```
+python3 autograder.py -q q11
+```
+
+
+
+
