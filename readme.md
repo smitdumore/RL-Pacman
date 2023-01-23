@@ -131,3 +131,13 @@ Testing the code
 ```
 python3 autograder.py -q q4
 ```
+
+### Q5a. Discrete Distribution Class
+
+Testing the code
+```
+python3 -m doctest -v inference.py
+```
+
+
+

@@ -104,6 +104,10 @@ def joinFactors(factors: List[Factor]):
     "*** YOUR CODE HERE ***"
     # Factor: This stores a table of probabilities, although the sum of the entries in the table is not necessarily 1
     # Refer project 4 prompt for "factor" definition  
+
+    # Joining will be used later in VariableElimination
+    # Where we marginalize one variable at a time and
+    # create a new factor by "Joining" 
     
     # This function basically does product rule
     # A factor is just a probability table

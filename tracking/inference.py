@@ -365,7 +365,18 @@ class DiscreteDistribution(dict):
         {}
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        sum=0
+        # Summing over all probability values
+        for x in self.values():
+            sum+=x
+        
+        if sum==0:
+            return
+
+        # Normalizing
+        for item in self.items():
+            self[item[0]] = item[1]/sum
+        
         "*** END YOUR CODE HERE ***"
 
     def sample(self):
@@ -390,7 +401,26 @@ class DiscreteDistribution(dict):
         0.0
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        
+        self.normalize()
+
+        # Initlialising a random variable
+        # This acts like a threshold
+        rand_val = random.random()
+        
+        for item in self.items():
+            # key is the name of the item
+            key = item[0]
+
+            # value is the weightage or probability of that item
+            value = item[1]
+
+            if rand_val < value:
+                return key
+            
+            rand_val -= value
+
+        # This will return the item which has weight less than some random threshold
         "*** END YOUR CODE HERE ***"
 
 
