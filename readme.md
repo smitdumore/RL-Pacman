@@ -160,3 +160,11 @@ Testing the code
 python3 autograder.py -q q7
 ```
 
+### Q8. Exact Inference Full Test
+
+Testing the code
+```
+python3 autograder.py -q q8
+```
+
+
