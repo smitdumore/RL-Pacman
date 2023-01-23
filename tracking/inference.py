@@ -644,7 +644,22 @@ class ExactInference(InferenceModule):
         current position is known.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        # Empty belief distribution
+        new_Pos_belief = DiscreteDistribution()
+
+        # self.allPositions is the distribution of all possible positions of ghost in the grid
+        for Pos_at_t in self.allPositions:
+
+            # Dynamics of ghost (SoSouthGhost)
+            # Pos_at_t_plus_1 is the new positon of ghost given its dynamics
+            Pos_at_t_plus_1 = self.getPositionDistribution(gameState, Pos_at_t)
+
+            # NewBelief(t+1) = Dynamics * OldBelief(t)
+            for x in Pos_at_t_plus_1:
+                new_Pos_belief[x] += Pos_at_t_plus_1[x] * self.beliefs[Pos_at_t]
+        
+        # Updating Beliefs
+        self.beliefs = new_Pos_belief
         "*** END YOUR CODE HERE ***"
 
     def getBeliefDistribution(self):

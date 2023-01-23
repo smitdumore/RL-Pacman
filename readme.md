@@ -153,3 +153,10 @@ Testing the code
 python3 autograder.py -q q6
 ```
 
+### Q7. Exact Inference with Time Elapse
+
+Testing the code
+```
+python3 autograder.py -q q7
+```
+
