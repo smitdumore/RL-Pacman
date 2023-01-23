@@ -139,5 +139,13 @@ Testing the code
 python3 -m doctest -v inference.py
 ```
 
+### Q5b. Observation Probability
+
+Testing the code
+```
+python3 autograder.py -q q5
+```
+
+
 
 
