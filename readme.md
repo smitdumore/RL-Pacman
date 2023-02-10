@@ -188,6 +188,18 @@ Testing the code
 python3 autograder.py -q q11
 ```
 
+## Project 5 
+
+### Files to edit : 
+1. models.py
+
+### Q1. Perceptron
+
+Testing the code
+```
+python3 autograder.py -q q1
+```
+
 
 
 
